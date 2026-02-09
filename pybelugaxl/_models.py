@@ -2,6 +2,26 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class BelugaState:
+    """
+    Represents the current state of a Beluga aircraft.
+    
+    Attributes:
+        id: Unique flight identifier
+        registration: Aircraft registration number
+        from_airport: Departure airport name
+        to_airport: Destination airport name
+        scheduled_departure: Scheduled departure time (Unix timestamp)
+        scheduled_arrival: Scheduled arrival time (Unix timestamp)
+        real_departure: Actual departure time (Unix timestamp)
+        real_arrival: Actual arrival time (Unix timestamp, None if not landed)
+        eta: Estimated time of arrival (Unix timestamp)
+        altitude: Current altitude in feet
+        ground_speed: Current ground speed in knots
+        heading: Current heading in degrees (0-360)
+        position: Current position as (latitude, longitude)
+        status: Flight status - "enroute", "on_ground", or "unknown"
+        last_update: Last data update time (Unix timestamp)
+    """
     id: str
     registration: str
     from_airport: str
@@ -10,7 +30,6 @@ class BelugaState:
     scheduled_arrival: str
     real_departure: str
     real_arrival: str
-    estimated_arrival: str
     eta: int
     altitude: int
     ground_speed: int
