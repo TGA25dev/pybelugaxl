@@ -16,6 +16,11 @@ for f in flights:
     print(f"{f.registration}: {f.from_airport} -> {f.to_airport}, Altitude: {f.altitude} ft")
 ```
 
+## Installation
+```bash
+pip install pybelugaxl
+```
+
 ## Attribution 
 Data is provided by the unofficial [FlightRadarAPI](https://github.com/JeanExtreme002/FlightRadarAPI)
  library (MIT License).
