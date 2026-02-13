@@ -60,27 +60,26 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
 
         if status not in ["enroute", "on_ground"]:
             raise ValueError("Invalid status. Must be 'enroute' or 'on_ground'")
-        
-    if zone is not None:
+    
+    if zone:
         if isinstance(zone, str):
             zone = zone.lower() 
             if zone not in _ALL_ZONES: 
                 raise ValueError(f"Invalid zone. Must be one of: {', '.join(sorted(_ALL_ZONES.keys()))}")
             zone = fr_api.get_bounds(_ALL_ZONES[zone])
         
-    elif isinstance(zone, tuple) and len(zone) == 3:
-        if not (-90 <= zone[0] <= 90) or not (-180 <= zone[1] <= 180) or not (-10000 <= zone[2] <= 10000):
-            raise ValueError("Invalid bounds. Latitude must be between -90 and 90, and longitude must be between -180 and 180. Range must be between -10000 and 10000 km.")
-        try:
-            zone = fr_api.get_bounds_by_point(zone[0], zone[1], radius=zone[2])
+        elif isinstance(zone, tuple) and len(zone) == 3:
+            if not (-90 <= zone[0] <= 90) or not (-180 <= zone[1] <= 180) or not (-10000 <= zone[2] <= 10000):
+                raise ValueError("Invalid bounds. Latitude must be between -90 and 90, and longitude must be between -180 and 180. Range must be between -10000 and 10000 km.")
+            try:
+                zone = fr_api.get_bounds_by_point(zone[0], zone[1], radius=zone[2])
 
-        except Exception as e:
-            logging.error(f"Error getting bounds for the provided coordinates: {e}")
-            raise ValueError(f"Error getting bounds for the provided coordinates: {e}")
-        
-    else:
-        raise ValueError("Invalid zone. Must be either a predefined zone name or a tuple of (lat, lon, range).")
-        
+            except Exception as e:
+                logging.error(f"Error getting bounds for the provided coordinates: {e}")
+                raise ValueError(f"Error getting bounds for the provided coordinates: {e}")
+            
+        else:
+            raise ValueError("Invalid zone. Must be a string representing a zone name or a tuple of (latitude, longitude, range in km).")
         
     beluga_flights = fr_api.get_flights(
         aircraft_type = _BELUGA_AIRCRAFT_TYPE,
@@ -138,7 +137,7 @@ def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=No
         registration (str, optional): The registration number of the Beluga to filter by. ("F-GXLG" for example).
         status (str, optional): The status of the flight to filter by. Must be either "enroute" or "on_ground".
         from_airport_icao (str, optional): The ICAO code of the departure airport to filter by.
-        to_airport_icao (str, optional): The ICAO code of the destination airport to filter by. 
+        to_airport_icao (str, optional): The ICAO code of the destination airport to filter by.
         
     Returns: 
         bool: True if there's a beluga flight within the specified zone, False otherwise. """ 
@@ -150,4 +149,4 @@ def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=No
     
     return False
 
-print(is_beluga_in_zone("france", status="enroute"))
+print(get_beluga())
