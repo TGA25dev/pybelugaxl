@@ -2,11 +2,7 @@ from FlightRadar24 import FlightRadar24API
 from pybelugaxl._models import BelugaState
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[logging.StreamHandler()]
-)
+logger = logging.getLogger(__name__)
 
 fr_api = FlightRadar24API()
 
@@ -75,7 +71,7 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
                 zone = fr_api.get_bounds_by_point(zone[0], zone[1], radius=zone[2])
 
             except Exception as e:
-                logging.error(f"Error getting bounds for the provided coordinates: {e}")
+                logger.error(f"Error getting bounds for the provided coordinates: {e}")
                 raise ValueError(f"Error getting bounds for the provided coordinates: {e}")
             
         else:
@@ -88,7 +84,7 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
         registration = registration,
         details=True
     )
-    logging.debug(f"Found {len(beluga_flights)} flights")
+    logger.debug(f"Found {len(beluga_flights)} flights")
 
     results = []
 
@@ -126,7 +122,7 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
 
             )
         )
-    logging.debug(f"Returning {len(results)} flights after filtering")
+    logger.debug(f"Returning {len(results)} flights after filtering")
     return results
 
 def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=None, from_airport_icao:str=None, to_airport_icao:str=None) -> bool: 
@@ -148,5 +144,3 @@ def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=No
         return len(beluga_flights) > 0 #if 1 or more flights are found, return True
     
     return False
-
-print(get_beluga())
