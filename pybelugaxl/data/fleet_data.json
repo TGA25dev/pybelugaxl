@@ -1,0 +1,67 @@
+{
+  "fleet": {
+    "F-GXLG": {
+      "xl_number": "XL1",
+      "msn": 1824,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO"
+    },
+
+    "F-GXLH": {
+      "xl_number": "XL2",
+      "msn": 1853,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO"
+    },
+    "F-GXLI": {
+      "xl_number": "XL3",
+      "msn": 1930,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO" 
+
+    },
+    "F-GXLJ": {
+      "xl_number": "XL4",
+      "msn": 1985,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO"
+    },
+
+    "F-GXLN": {
+      "xl_number": "XL5",
+      "msn": 2027,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO"
+    },
+
+    "F-GXLO": {
+      "xl_number": "XL6",
+      "msn": 2041,
+      "icao_type": "A337",
+      "operator_icao": "BGA",
+      "status": "active",
+      "base_airport_icao": "LFBO"
+    }
+  },
+
+  "sources": [
+    {
+      "name": "Airfleets.net",
+      "url": "https://www.airfleets.net"
+    },
+    {
+      "name": "Planespotters.net",
+      "url": "https://www.planespotters.net"
+    }
+  ]
+}
