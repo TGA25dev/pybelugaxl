@@ -3,55 +3,41 @@
     "F-GXLG": {
       "xl_number": "XL1",
       "msn": 1824,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO"
+      "status": "active"
     },
 
     "F-GXLH": {
       "xl_number": "XL2",
       "msn": 1853,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO"
+      "status": "active"
     },
     "F-GXLI": {
       "xl_number": "XL3",
       "msn": 1930,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO" 
+      "status": "active"
 
     },
     "F-GXLJ": {
       "xl_number": "XL4",
       "msn": 1985,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO"
+      "status": "active"
     },
 
     "F-GXLN": {
       "xl_number": "XL5",
       "msn": 2027,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO"
+      "status": "active"
     },
 
     "F-GXLO": {
       "xl_number": "XL6",
       "msn": 2041,
-      "icao_type": "A337",
-      "operator_icao": "BGA",
-      "status": "active",
-      "base_airport_icao": "LFBO"
-    }
+      "status": "active"
+    },
+    
+    "base_airport_icao": "LFBO",
+    "icao_type": "A337",
+    "operator_icao": "BGA"
   },
 
   "sources": [
