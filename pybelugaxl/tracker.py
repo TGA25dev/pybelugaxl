@@ -144,3 +144,14 @@ def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=No
         return len(beluga_flights) > 0 #if 1 or more flights are found, return True
     
     return False
+
+def get_beluga_fleet_status() -> dict:
+    """Get the current status of the entire Beluga fleet, including the number of planes in the air and on the ground."""
+    beluga_flights = get_beluga()
+    fleet_status = {
+        "total": len(beluga_flights),
+        "enroute": sum(1 for flight in beluga_flights if flight.status == "enroute"),
+        "on_ground": sum(1 for flight in beluga_flights if flight.status == "on_ground"),
+        "unknown": sum(1 for flight in beluga_flights if flight.status == "unknown")
+    }
+    return fleet_status

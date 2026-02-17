@@ -7,6 +7,7 @@ A Python library to track the Airbus BelugaXL flights in real time using FlightR
 - Filter by registration number, flight status, or departure/arrival airport
 - Return detailed flight information: position, speed, altitude, departure/arrival times
 - Return a boolean if a specific aircraft is found in a given zone
+- Get stats about the entire BelugaXL fleet
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane%20Departure.png" alt="Airplane Departure" width="25" height="25" /> Usage
 ```python
