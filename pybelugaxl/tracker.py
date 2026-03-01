@@ -1,6 +1,9 @@
 from FlightRadar24 import FlightRadar24API
 from pybelugaxl._models import BelugaState
 import logging
+import os
+import json
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +13,7 @@ _AIRBUS_INT_TRANSPORT_ICAO = "BGA"
 _BELUGA_AIRCRAFT_TYPE = "A337"
 _ZONES = fr_api.get_zones()
 _EUROPE_BOUNDS = fr_api.get_bounds(_ZONES["europe"])
+_CURRENT_PATH=os.path.dirname(__file__)
 
 def _get_all_zone_names(zones_dict, parent_key='') -> dict:
     """Recursively extract all zone names including subzones."""
@@ -155,3 +159,10 @@ def get_beluga_fleet_status() -> dict:
         "unknown": sum(1 for flight in beluga_flights if flight.status == "unknown")
     }
     return fleet_status
+
+def get_fleet_data():
+    """Get static data about the Beluga fleet."""
+    with open(f"{_CURRENT_PATH}/data/fleet_data.json", "r") as json_file:
+        data = json.load(json_file)
+    
+    return data
