@@ -47,4 +47,24 @@ class BelugaState:
             return "on_ground"
         
         return "unknown"
+    
+@dataclass(frozen=True)
+class BelugaPhoto:
+    """
+    An image of a Beluga aircraft.
+    
+    Attributes:
+        registration: Aircraft registration number
+        url: URL of the image
+        location: Location where the photo was taken
+        photographer: Name of the photographer
+        date_taken: Date the photo was taken
+        date_uploaded: Date the photo was uploaded
+    """
 
+    registration: str
+    url: str
+    location: str
+    photographer: str
+    date_taken: str
+    date_uploaded: str
