@@ -1,10 +1,6 @@
 from FlightRadar24 import FlightRadar24API
 from pybelugaxl._models import BelugaState, BelugaPhoto
 import logging
-import os
-import json
-import requests
-import random
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +10,6 @@ _AIRBUS_INT_TRANSPORT_ICAO = "BGA"
 _BELUGA_AIRCRAFT_TYPE = "A337"
 _ZONES = fr_api.get_zones()
 _EUROPE_BOUNDS = fr_api.get_bounds(_ZONES["europe"])
-_CURRENT_PATH=os.path.dirname(__file__)
 
 def _get_all_zone_names(zones_dict, parent_key='') -> dict:
     """Recursively extract all zone names including subzones."""
@@ -149,93 +144,3 @@ def is_beluga_in_zone(zone: str | tuple, registration: str = None, status:str=No
         return len(beluga_flights) > 0 #if 1 or more flights are found, return True
     
     return False
-
-def get_beluga_fleet_status() -> dict:
-    """Get the current status of the entire Beluga fleet, including the number of planes in the air and on the ground."""
-    beluga_flights = get_beluga()
-    fleet_status = {
-        "total": len(beluga_flights),
-        "enroute": sum(1 for flight in beluga_flights if flight.status == "enroute"),
-        "on_ground": sum(1 for flight in beluga_flights if flight.status == "on_ground"),
-        "unknown": sum(1 for flight in beluga_flights if flight.status == "unknown")
-    }
-    return fleet_status
-
-#TODO: Find some way to filter the data from the JSON file..
-def get_fleet_data():
-    """Get static data about the Beluga fleet."""
-    with open(f"{_CURRENT_PATH}/data/fleet_data.json", "r") as json_file:
-        data = json.load(json_file)
-    
-    return data
-
-def get_images(registration: str = None, limit:int=3) -> list[BelugaPhoto]:
-    #Credits for the JETAPI project, which is used to get the images of the Beluga planes.
-    #Author: Macsen Casaus
-    #Link: https://github.com/macsencasaus/jetapi
-
-    """
-    Get images of a Beluga aircraft from JetPhotos using unofficial JetPhotos API (https://github.com/macsencasaus/jetapi).
-
-    Args:
-        registration (str, optional): The registration number of the Beluga to filter by. ("F-GXLG" for example).
-                                      If not provided, a random Beluga registration is selected.
-        limit (int, optional): The maximum number of images to retrieve (default is 3, max is 15).
-
-    Returns:
-        list[BelugaPhoto]: A list of BelugaPhoto objects containing image metadata.
-    """
-    allowed_registrations = ["F-GXLG", "F-GXLH", "F-GXLI", "F-GXLJ", "F-GXLN", "F-GXLO"] #harcoded list ?
-
-    if registration:
-        registration = registration.upper()
-        if len(registration) < 5 or len(registration) > 7:
-            raise ValueError("Invalid registration. Please provide a valid plane registration number.")
-        
-        if registration not in allowed_registrations:
-            raise ValueError(f"Woops.. That is not a BelugaXL registration. Must be one of: {', '.join(allowed_registrations)}")
-    else:
-        registration = random.choice(allowed_registrations) #randomly select a beluga if no registration is given
-
-    if limit != 3:
-        if not isinstance(limit, int) or limit < 1 or limit > 15:
-            raise ValueError("Invalid limit. Please provide an integer between 1 and 15.")
-
-    try:
-        response = requests.get(f"https://www.jetapi.dev/api?reg={registration}&photos={limit}&only_jp=true", timeout=10)
-        results = []
-
-        if response.status_code == 200:
-            data = response.json()
-            
-            if "Images" not in data or len(data["Images"]) == 0:
-                logger.warning(f"No images found for registration {registration}")
-                return []
-            
-            images = data["Images"]
-            random.shuffle(images) #shuffle images to get a random selection every time
-            
-            for img in images:
-                results.append(
-                    BelugaPhoto(
-                        registration=registration,
-                        url=img["Image"] if "Image" in img else None,
-                        photographer=img["Photographer"] if "Photographer" in img else "Unknown",
-                        location=img["Location"] if "Location" in img else "Unknown",
-                        date_taken=img["DateTaken"] if "DateTaken" in img else "Unknown",
-                        date_uploaded=img["DateUploaded"] if "DateUploaded" in img else "Unknown"
-                    )
-                )
-
-            return results
-        else:
-            logger.error(f"Failed to fetch images for registration {registration}. Status code: {response.status_code}")
-            return []
-        
-    except Exception as e:
-        logger.error(f"Error fetching images for registration {registration}: {e}")
-        return []
-
-
-#if __name__ == "__main__":
-#TODO: Add some test cases here
