@@ -68,3 +68,30 @@ class BelugaPhoto:
     photographer: str
     date_taken: str
     date_uploaded: str
+
+
+@dataclass(frozen=True)
+class BelugaFleetData:
+    """
+    Static data about the Beluga fleet or about a specific plane in the fleet
+    
+    Attributes:
+        total_planes: Total number of Beluga planes in the fleet
+        base_airport_icao: ICAO code of the base airport for the fleet
+        plane_type_icao: ICAO code of the planes type
+        operator_icao: ICAO code of the operator of the fleet
+        
+        xl_number: The unique number of the plane in the fleet
+        msn: Manufacturer Serial Number of the plane
+        status: Current status of the plane
+
+        source: Sources of the data
+    """
+    total_planes: int
+    base_airport_icao: str
+    plane_type_icao: str
+    operator_icao: str
+    xl_number: str | None
+    msn: int | None
+    status: str | None
+    source: list[dict[str, str]]
