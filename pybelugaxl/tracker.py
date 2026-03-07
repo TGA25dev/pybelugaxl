@@ -1,6 +1,8 @@
 from FlightRadar24 import FlightRadar24API
-from pybelugaxl._models import BelugaState, BelugaPhoto
+from pybelugaxl._models import BelugaState
 import logging
+import random
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +25,7 @@ def _get_all_zone_names(zones_dict, parent_key='') -> dict:
 
 _ALL_ZONES = _get_all_zone_names(_ZONES)
 
-def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=None, to_airport_icao:str=None, zone:str=None) -> list[BelugaState]:
+def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=None, to_airport_icao:str=None, zone:str=None, demo:bool=None) -> list[BelugaState]:
     """
     Get detailed information about Beluga flights, with optional filtering by registration, status, and airports.
     
@@ -32,10 +34,33 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
         status (str, optional): The status of the flight to filter by. Must be either "enroute" or "on_ground".
         from_airport_icao (str, optional): The ICAO code of the departure airport to filter by.
         to_airport_icao (str, optional): The ICAO code of the destination airport to filter by.
+        demo (bool, optional): If True, returns hardcoded dummy data for demo purposes. Othewrwise, retrieves real-time data.
     
     Returns:
         list: Detailed information about the Beluga flight
     """
+
+    if demo:
+        logger.info("Showcase mode enabled. Returning hardcoded (dummy) data")
+        return [
+            BelugaState(
+                id="BGA123XL",
+                registration="F-GXLG",
+                from_airport="Toulouse-Blagnac Airport",
+                to_airport="Toulouse-Blagnac Airport",
+                scheduled_departure=datetime.datetime.now().timestamp(),
+                scheduled_arrival=datetime.datetime.now().timestamp() + 4000,
+                real_departure=datetime.datetime.now().timestamp() + 750,
+                real_arrival=None,
+                eta=None,
+                altitude=random.randint(1000, 30000),
+                ground_speed=random.randint(100, 300),
+                heading=random.randint(0, 360),
+                position=(43.6343, 1.3673),
+                status="enroute",
+                last_update=datetime.datetime.now().timestamp()
+            )
+        ]
     if registration:
         registration = registration.upper()
         if len(registration) < 5 or len(registration) > 7:
