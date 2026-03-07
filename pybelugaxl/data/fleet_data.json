@@ -1,42 +1,48 @@
 {
   "fleet": {
     "F-GXLG": {
+      "registration": "F-GXLG",
       "xl_number": "XL1",
       "msn": 1824,
       "status": "active"
     },
 
     "F-GXLH": {
+      "registration": "F-GXLH",
       "xl_number": "XL2",
       "msn": 1853,
       "status": "active"
     },
     "F-GXLI": {
+      "registration": "F-GXLI",
       "xl_number": "XL3",
       "msn": 1930,
       "status": "active"
 
     },
     "F-GXLJ": {
+      "registration": "F-GXLJ",
       "xl_number": "XL4",
       "msn": 1985,
       "status": "active"
     },
 
     "F-GXLN": {
+      "registration": "F-GXLN",
       "xl_number": "XL5",
       "msn": 2027,
       "status": "active"
     },
 
     "F-GXLO": {
+      "registration": "F-GXLO",
       "xl_number": "XL6",
       "msn": 2041,
       "status": "active"
     },
     
     "base_airport_icao": "LFBO",
-    "icao_type": "A337",
+    "plane_type_icao": "A337",
     "operator_icao": "BGA"
   },
 
