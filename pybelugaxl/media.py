@@ -1,7 +1,9 @@
-from pybelugaxl._models import BelugaPhoto
 import requests
 import random
 import logging
+
+from pybelugaxl._models import BelugaPhoto
+from .exceptions import InvalidRegistrationError
 
 logger = logging.getLogger(__name__)
 
@@ -26,10 +28,10 @@ def get_images(registration: str = None, limit:int=3) -> list[BelugaPhoto]:
     if registration:
         registration = registration.upper()
         if len(registration) < 5 or len(registration) > 7:
-            raise ValueError("Invalid registration. Please provide a valid plane registration number.")
+            raise InvalidRegistrationError("Invalid registration. Please provide a valid plane registration number.")
         
         if registration not in allowed_registrations:
-            raise ValueError(f"Woops.. That is not a BelugaXL registration. Must be one of: {', '.join(allowed_registrations)}")
+            raise InvalidRegistrationError(f"Woops.. That is not a BelugaXL registration. Must be one of: {', '.join(allowed_registrations)}")
     else:
         registration = random.choice(allowed_registrations) #randomly select a beluga if no registration is given
 

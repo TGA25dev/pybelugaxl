@@ -1,7 +1,12 @@
 import os
 import json
+import logging
+
 from .tracker import get_beluga
 from ._models import BelugaFleetData
+from .exceptions import InvalidRegistrationError
+
+logger = logging.getLogger(__name__)
 
 _CURRENT_PATH=os.path.dirname(__file__)
 
@@ -15,8 +20,6 @@ def get_beluga_fleet_status() -> dict:
         "unknown": sum(1 for flight in beluga_flights if flight.status == "unknown")
     }
     return fleet_status
-
-#TODO: Find some way to filter the data from the JSON file
 
 def get_fleet_data(registration: str = None) -> list[BelugaFleetData]:
     """Get static data about the Beluga fleet.
@@ -48,7 +51,7 @@ def get_fleet_data(registration: str = None) -> list[BelugaFleetData]:
         if registration:
             registration = registration.upper()
             if len(registration) < 5 or len(registration) > 7:
-                raise ValueError("Invalid registration. Please provide a valid plane registration number.")
+                raise InvalidRegistrationError("Invalid registration. Please provide a valid plane registration number.")
         
             plane_data = fleet.get(registration)
             if plane_data:
@@ -66,7 +69,8 @@ def get_fleet_data(registration: str = None) -> list[BelugaFleetData]:
                 )
 
             else:
-                raise ValueError(f"No data found for registration {registration}")
+                logger.warning(f"No data found for registration {registration}")
+                result = []
         else:
             result.append(
                 BelugaFleetData(

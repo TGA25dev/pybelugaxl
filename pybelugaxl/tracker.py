@@ -1,11 +1,12 @@
-from FlightRadar24 import FlightRadar24API
-from pybelugaxl._models import BelugaState
 import logging
 import random
 import datetime
+from FlightRadar24 import FlightRadar24API
+
+from ._models import BelugaState
+from .exceptions import InvalidRegistrationError, InvalidICAOCodeError, InvalidStatusError, InvalidGeoError
 
 logger = logging.getLogger(__name__)
-
 fr_api = FlightRadar24API()
 
 _AIRBUS_INT_TRANSPORT_ICAO = "BGA"
@@ -64,43 +65,43 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
     if registration:
         registration = registration.upper()
         if len(registration) < 5 or len(registration) > 7:
-            raise ValueError("Invalid registration. Please provide a valid plane registration number.")
+            raise InvalidRegistrationError("Invalid registration. Please provide a valid plane registration number.")
         
     if to_airport_icao:
         to_airport_icao = to_airport_icao.upper()
         if len(to_airport_icao) != 4:
-            raise ValueError("Invalid to_airport_icao. Please provide a valid 4-letter ICAO code.")
+            raise InvalidICAOCodeError("Invalid to_airport_icao. Please provide a valid 4-letter ICAO code.")
 
     if from_airport_icao:
         from_airport_icao = from_airport_icao.upper()
         if len(from_airport_icao) != 4:
-            raise ValueError("Invalid from_airport_icao. Please provide a valid 4-letter ICAO code.")
+            raise InvalidICAOCodeError("Invalid from_airport_icao. Please provide a valid 4-letter ICAO code.")
         
     if status:
         status = status.lower()
 
         if status not in ["enroute", "on_ground"]:
-            raise ValueError("Invalid status. Must be 'enroute' or 'on_ground'")
+            raise InvalidStatusError("Invalid status. Must be 'enroute' or 'on_ground'")
     
     if zone:
         if isinstance(zone, str):
             zone = zone.lower() 
             if zone not in _ALL_ZONES: 
-                raise ValueError(f"Invalid zone. Must be one of: {', '.join(sorted(_ALL_ZONES.keys()))}")
+                raise InvalidGeoError(f"Invalid zone. Must be one of: {', '.join(sorted(_ALL_ZONES.keys()))}")
             zone = fr_api.get_bounds(_ALL_ZONES[zone])
         
         elif isinstance(zone, tuple) and len(zone) == 3:
             if not (-90 <= zone[0] <= 90) or not (-180 <= zone[1] <= 180) or not (-10000 <= zone[2] <= 10000):
-                raise ValueError("Invalid bounds. Latitude must be between -90 and 90, and longitude must be between -180 and 180. Range must be between -10000 and 10000 km.")
+                raise InvalidGeoError("Invalid bounds. Latitude must be between -90 and 90, and longitude must be between -180 and 180. Range must be between -10000 and 10000 km.")
             try:
                 zone = fr_api.get_bounds_by_point(zone[0], zone[1], radius=zone[2])
 
             except Exception as e:
                 logger.error(f"Error getting bounds for the provided coordinates: {e}")
-                raise ValueError(f"Error getting bounds for the provided coordinates: {e}")
+                raise InvalidGeoError(f"Error getting bounds for the provided coordinates: {e}")
             
         else:
-            raise ValueError("Invalid zone. Must be a string representing a zone name or a tuple of (latitude, longitude, range in km).")
+            raise InvalidGeoError("Invalid zone. Must be a string representing a zone name or a tuple of (latitude, longitude, range in km).")
         
     beluga_flights = fr_api.get_flights(
         aircraft_type = _BELUGA_AIRCRAFT_TYPE,
