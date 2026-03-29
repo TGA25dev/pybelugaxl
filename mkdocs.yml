@@ -9,19 +9,19 @@ theme:
     - navigation.footer
 
   palette:
-    # Dark Mode
-    - scheme: slate
-      toggle:
-        icon: material/weather-sunny
-        name: Dark mode
-      primary: indigo
-      accent: indigo
-
     # Light Mode
     - scheme: default
       toggle:
         icon: material/weather-night
         name: Light mode
+      primary: indigo
+      accent: indigo
+
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
       primary: indigo
       accent: indigo
   
