@@ -27,7 +27,7 @@ pip install pybelugaxl
 Here's a simple example to get all active BelugaXL flights that are currently listed on FlightRadar24:
 
 ???+ note "No Beluga flights right now?"
-    If no BelugaXL planes are currently flying you can still set the `demo` parameter to `True` to get mock data. 
+    If no BelugaXL planes are currently flying, use `demo=True`.
 
     ```python
     # Get fake Beluga flights for demo purposes
@@ -35,6 +35,7 @@ Here's a simple example to get all active BelugaXL flights that are currently li
     ```
 
 For regular usage, use:
+
 ```python
 from pybelugaxl import get_beluga
 
@@ -47,6 +48,7 @@ for flight in flights:
 ```
 
 Filter by criteria:
+
 ```python
 # Get only flights that are enroute
 enroute_flights = get_beluga(status="enroute")
