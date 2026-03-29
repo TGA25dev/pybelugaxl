@@ -16,9 +16,9 @@ status: new
 - Easily fetch pictures of the planes
 
 ## Installation
-Use `pip` to install the module with the following command
+Use `pip` to install the module with the following command:
 
-``` bash
+```bash
 pip install pybelugaxl
 ```
 
@@ -28,22 +28,22 @@ Here's a simple example to get all active BelugaXL flights that are currently li
 
 ???+ note "No Beluga flights right now?"
     If no BelugaXL planes are currently flying you can still set the `demo` parameter to `True` to get mock data. 
-    
+
     ```python
-    #Get fake Beluga flights for demo purposes
+    # Get fake Beluga flights for demo purposes
     flights = get_beluga(demo=True)
     ```
 
 For regular usage, use:
-``` python
+```python
 from pybelugaxl import get_beluga
 
-#Get all Beluga flights
+# Get all Beluga flights
 flights = get_beluga()
 
 for flight in flights:
     print(f"{flight.registration}: {flight.from_airport} → {flight.to_airport}")
-    print(f"  Altitude: {flight.altitude} ft, Speed: {flight.ground_speed} kt")
+    print(f"    Altitude: {flight.altitude} ft, Speed: {flight.ground_speed} kt")
 ```
 
 Filter by criteria:
@@ -104,72 +104,42 @@ This function takes no parameters and returns the current status of the BelugaXL
 Represents the current state of a Beluga aircraft.
 ##### Attributes
 - `id`: Unique flight identifier
-
 - `registration`: Aircraft registration number
-
 - `from_airport`: Departure airport name
-
 - `to_airport`: Destination airport name
-
 - `scheduled_departure`: Scheduled departure time *(Unix timestamp)*
-
 - `scheduled_arrival`: Scheduled arrival time *(Unix timestamp)*
-
 - `real_departure`: Actual departure time *(Unix timestamp)*
-
 - `real_arrival`: Actual arrival time *(Unix timestamp, None if not landed)*
-
 - `eta`: Estimated time of arrival *(Unix timestamp)*
-
 - `altitude`: Current altitude in feet
-
 - `ground_speed`: Current ground speed in knots
-
 - `heading`: Current heading in degrees (0-360)
-
-- `position`: Current position as (latitude, 
-longitude)
-
+- `position`: Current position as (latitude, longitude)
 - `status`: Flight status - "enroute", "on_ground", or "unknown"
-
 - `last_update`: Last data update time *(Unix timestamp)*
-
 
 #### BelugaPhoto
 An image of a Beluga aircraft.
 ##### Attributes
-
 - `registration`: Aircraft registration number
-
 - `url`: URL of the image
-
 - `location`: Location where the photo was taken
-
 - `photographer`: Name of the photographer
-
 - `date_taken`: Date the photo was taken
-
 - `date_uploaded`: Date the photo was uploaded
 
 #### BelugaFleetData
 Static data about the Beluga fleet or about a specific plane in the fleet
 ##### Attributes
-
 - `total_planes`: Total number of Beluga planes in the fleet
-
 - `base_airport_icao`: ICAO code of the base airport for the fleet
-
 - `plane_type_icao`: ICAO code of the plane type
-
 - `operator_icao`: ICAO code of the operator of the fleet
-
 - `xl_number`: The unique number of the plane in the fleet
-
 - `msn`: Manufacturer Serial Number of the plane
-
 - `status`: Current status of the plane
-
 - `source`: Sources of the data
 
 ### Exceptions
-To be added one day <small>(maybe never..)</small>
+To be added one day <small>(probably never..)</small>
