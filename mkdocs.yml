@@ -1,6 +1,7 @@
 site_name: pybelugaxl
 site_description: Documentation for pybelugaxl project
 repo_url: https://github.com/TGA25dev/pybelugaxl
+site_url: https://tga25dev.github.io/pybelugaxl/
 theme:
   name: material
   features:

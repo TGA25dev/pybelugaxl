@@ -21,6 +21,9 @@ in_zone = is_beluga_in_zone(zone="france", registration="F-GXLI")
 print(in_zone)
 ```
 
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Blue%20Book.png" alt="Blue Book" width="25" height="25" /> Documentation
+Documentation is available [here](https://tga25dev.github.io/pybelugaxl/)
+
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png" alt="Light Bulb" width="25" height="25" /> Installation 
 ```bash
 pip install pybelugaxl
