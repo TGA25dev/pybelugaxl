@@ -35,6 +35,7 @@ def get_beluga(registration:str=None, status:str=None, from_airport_icao:str=Non
         status (str, optional): The status of the flight to filter by. Must be either "enroute" or "on_ground".
         from_airport_icao (str, optional): The ICAO code of the departure airport to filter by.
         to_airport_icao (str, optional): The ICAO code of the destination airport to filter by.
+        zone (str | tuple, optional): The name of the zone to filter by. Or a tuple of (latitude, longitude, range in km) to define a custom zone. For example: "france" or (48.8566, 2.3522, 100).
         demo (bool, optional): If True, returns hardcoded dummy data for demo purposes. Othewrwise, retrieves real-time data.
     
     Returns:
